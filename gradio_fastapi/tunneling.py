@@ -8,7 +8,7 @@ import subprocess
 import sys
 import time
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
 import httpx
 
@@ -70,7 +70,6 @@ class Tunnel:
 
     def kill(self):
         if self.proc is not None:
-            print(f"Killing tunnel {self.local_host}:{self.local_port} <> {self.url}")
             self.proc.terminate()
             self.proc = None
 
@@ -140,7 +139,7 @@ class Tunnel:
 
 
 def setup_tunnel(
-    local_host: str, local_port: int, share_token: str, share_server_address: str | None
+    local_host: str, local_port: int, share_token: str, share_server_address: Optional[str]
 ) -> str:
     GRADIO_API_SERVER = "https://api.gradio.app/v2/tunnel-request"
 
@@ -163,7 +162,6 @@ def setup_tunnel(
         remote_port = int(remote_port)
     try:
         tunnel = Tunnel(remote_host, remote_port, local_host, local_port, share_token)
-        address = tunnel.start_tunnel()
-        return address
+        return tunnel
     except Exception as e:
         raise RuntimeError(str(e)) from e

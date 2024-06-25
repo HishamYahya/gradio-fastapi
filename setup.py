@@ -26,6 +26,7 @@ setup(
     ],
     packages=find_packages(),
     url="https://github.com/HishamYahya/gradio-fastapi",
+    download_url=f"https://github.com/HishamYahya/gradio-fastapi/archive/refs/tags/v{version}.tar.gz",
     install_requires=["fastapi"],
     classifiers=[
         "Development Status :: 3 - Alpha",
@@ -34,10 +35,6 @@ setup(
         "Topic :: Software Development :: Build Tools",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3",
     ],
 )

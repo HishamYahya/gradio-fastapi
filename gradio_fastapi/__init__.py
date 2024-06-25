@@ -1,0 +1,1 @@
+from .lifespan import gradio_lifespan_init

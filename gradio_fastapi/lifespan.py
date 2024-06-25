@@ -29,11 +29,19 @@ def gradio_lifespan_init(lifespan=None, port=8000) -> Callable[[FastAPI], Lifesp
     async def out_lifespan(app: FastAPI):
         logger = logging.getLogger("uvicorn.error")
         logger.info("Setting up Gradio tunnel...")
-        address = setup_tunnel("localhost", port, secrets.token_urlsafe(32), None)
-        logger.info(f"Running on public URL: {address}")
+        tunnel = setup_tunnel("localhost", port, secrets.token_urlsafe(32), None)
+        try:
+            address = tunnel.start_tunnel()
+            logger.info(f"Running on public URL: {address}")
+        except Exception as e:
+            logger.error(f"Unable to start Gradio tunnel: {str(e)}")
         if lifespan:
             yield next(lifespan(app))
         else:
             yield
+
+        if tunnel.proc is not None:
+            logger.info(f"Killing Gradio tunnel {tunnel.local_host}:{tunnel.local_port} <> {tunnel.url}")
+            tunnel.kill()
 
     return out_lifespan

@@ -10,7 +10,7 @@ This repository provides a simple and efficient way to tunnel any FastAPI applic
 
 ## Installation
 ```bash
-pip install fastapi-gradio
+pip install gradio-fastapi
 ```
 
 ## Usage
